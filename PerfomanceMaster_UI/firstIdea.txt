@@ -1,0 +1,13 @@
+- build app control performance:
++ điều chỉnh dễ dàng cấu hình performance cho win, ví dụ: balanced, saving, max_perfomance...
++ xem các thông số
+  cpu (max xung, min xung, avg xung, temp) - gpu (max/min/avg used, temp) - ram (bus, used) - ssd (used percent)
+  có thể override lên màn hình, ghim được
++ tắt được các phần mềm chạy ngầm gây tốn tài nguyên
++ dọn dẹp ram, cache, rác trong ổ cứng
++ có UI đẹp, chia các tính năng ra nhiều option
+
+
+
+
+===> dùng javafx để tạo UI, chức năng thì dùng bằng C++
