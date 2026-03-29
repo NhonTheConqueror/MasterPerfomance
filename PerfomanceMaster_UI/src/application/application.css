@@ -1,1 +1,31 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root {
+    -fx-background-color: #f3f3f3; /* Light gray background */
+}
+
+.modern-button {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-min-width: 250;
+    -fx-min-height: 180;
+    -fx-font-size: 16px;
+    -fx-font-family: "Segoe UI", Helvetica, Arial;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    /* Soft Shadow */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+.modern-button:hover {
+    -fx-background-color: #FAFFFF;
+    -fx-translate-y: -3; /* Slight lift effect */
+}
+
+.box {
+	    -fx-background-color: #BEDAE2
+}
+
+.slider .thumb {
+    -fx-background-color: #ff4d4d;
+}
+
