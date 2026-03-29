@@ -28,26 +28,25 @@ public class Main extends Application{
 	    try {
 	        //THE MAIN CONTAINER
 	        BorderPane mainLayout = new BorderPane();
-	        mainLayout.setPadding(new Insets(20)); // add space between obj, container
+	        mainLayout.setPadding(new Insets(50)); // set a "foam" thick 50px all around in site mainlayouts
 
 
-	        //the pane which contain buttons, center
+	        //the pane which contain buttons, in center
 	        GridPane grid = new GridPane();
 	        grid.setAlignment(Pos.CENTER);
 	        grid.setHgap(30); //horizon gap between buttons
 	        grid.setVgap(30); //vertical gap between buttons
-
+	        //grid.setStyle("-fx-background-color: #C0C0C0;"); // for debugging
+	        //create buttons
 	        Button button1 = new Button("Disable\n Defender & Update");
 	        Button button2 = new Button("Performance's insight");
 	        Button button3 = new Button("Terminate\n background apps");
 	        Button button4 = new Button("Clean Ram & Storage");
-
 	        // add a CSS class to all buttons for styling
 	        button1.getStyleClass().add("modern-button");
 	        button2.getStyleClass().add("modern-button");
 	        button3.getStyleClass().add("modern-button");
 	        button4.getStyleClass().add("modern-button");
-
 	        // add buttons to grid, also position
 	        grid.add(button1, 0, 0);//top left
 	        grid.add(button2, 1, 0);//top right
@@ -57,24 +56,28 @@ public class Main extends Application{
 	        mainLayout.setCenter(grid);
 	        
 	        
-	        //slider
-	        VBox box = new VBox();
+	        //the pane that contain slider
+	        VBox box = new VBox(12);// 12 is height distance between child themself
 	        box.setAlignment(Pos.CENTER);
-
 	        box.getStyleClass().add("box");
-	        
-	        HBox labels = new HBox(140);
-	        labels.setAlignment(Pos.TOP_CENTER);
+	        box.setPadding(new Insets(12));// distance between child and the box itself
+	        //the labels above the slider
+	        HBox labels = new HBox(140);//weight distance between its child (those labels)
+	        labels.setAlignment(Pos.CENTER);
 	        Label min = new Label("Minimum");
 	        Label bal = new Label("Balanced");       
 	        Label max = new Label("Maximum");       
 	        labels.getChildren().addAll(min,bal,max);	        
-	        
-	        Slider slider = new Slider(0, 100, 50);
-	        slider.setMaxWidth(400);
-	        
+	        //the slider
+	        Slider slider = new Slider(0, 100, 50); // (min, max, start)
+	        slider.setShowTickMarks(true);// enable the marks
+	        slider.setMajorTickUnit(25); // divide slider by 25 => there 4 option point 0, 25, 50, 75, 100
+	        slider.setSnapToTicks(true);	// the slider jump to the closet tick...
+	        slider.setMinorTickCount(0);// make the jump work better.
+	        slider.setMaxWidth(440); // slider length
+	        //add those to the boxs
 	        box.getChildren().addAll(labels, slider);
-	        
+	        //add the box to main layout
 	        mainLayout.setBottom(box);
 	        
 
@@ -86,7 +89,7 @@ public class Main extends Application{
             primaryStage.setMaxWidth(650);
             primaryStage.setMinHeight(650);
             primaryStage.setMaxHeight(650);
-            
+            //setup to primaryStage
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	        /*
@@ -95,10 +98,13 @@ public class Main extends Application{
 	         */
 	        centerOnScreen(primaryStage);
 	        
-	    } catch(Exception e) { e.printStackTrace(); }
+	    } 
+	    catch(Exception e) { e.printStackTrace(); } //error catching
 	}
 
+	//main
 	public static void main(String[] agrs) {
+		//launch the app
 		launch(agrs);
 	}	
 }
