@@ -3,6 +3,7 @@ package application;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.stage.*;
 import javafx.scene.Scene;
@@ -10,8 +11,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.beans.value.ChangeListener;
@@ -26,7 +27,10 @@ public class Main extends Application{
 		stage.setY((visualBound.getHeight() - stage.getHeight())/2);
 	}
 	
-	//
+	/*
+	 * the line color behind slider button
+	 * of course i stealth it from stackOverflow
+	 */
 	private void ColorLinerTrack(Slider slider) {
         //
         StackPane trackPane = (StackPane) slider.lookup(".track");
@@ -34,16 +38,16 @@ public class Main extends Application{
         trackPane.setStyle("-fx-background-color: linear-gradient(to right, #0078D4 50%, #D3D3D3 50%);");
         // add listener
         slider.valueProperty().addListener(new ChangeListener<Number>() {
+        		//method of ChangeListener
             public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
                 // Calculate percentage just in case you change the Max value later
                 double percentage = (new_val.doubleValue() / slider.getMax()) * 100;
-                
-                // Update the gradient dynamically
+                // gradient dynamically
                 String style = String.format("-fx-background-color: linear-gradient(to right, #0078D4 %d%%, #D3D3D3 %d%%);", 
                                              (int) percentage, (int) percentage);
                 trackPane.setStyle(style);
             }
-        });	
+        } );	
 	}
 	
 	
@@ -84,21 +88,33 @@ public class Main extends Application{
 	        VBox box = new VBox(12);// 12 is height distance between child themself
 	        box.setAlignment(Pos.CENTER);
 	        box.getStyleClass().add("box");
-	        box.setPadding(new Insets(12));// distance between child and the box itself
+	        box.setPadding(new Insets(10, 20, 10, 20));// distance between child and the box itself
 	        //the labels above the slider
-	        HBox labels = new HBox(140);//weight distance between its child (those labels)
-	        labels.setAlignment(Pos.CENTER);
+	        GridPane labels = new GridPane();
+	        labels.setMaxWidth(400); // MUST be identical to slider width
+
+	        ColumnConstraints col1 = new ColumnConstraints(); col1.setPercentWidth(33.3); col1.setHalignment(HPos.LEFT);
+	        ColumnConstraints col2 = new ColumnConstraints(); col2.setPercentWidth(33.3); col2.setHalignment(HPos.CENTER);
+	        ColumnConstraints col3 = new ColumnConstraints(); col3.setPercentWidth(33.3); col3.setHalignment(HPos.RIGHT);
+	        labels.getColumnConstraints().addAll(col1, col2, col3);
+
 	        Label min = new Label("Minimum");
 	        Label bal = new Label("Balanced");       
-	        Label max = new Label("Maximum");       
-	        labels.getChildren().addAll(min,bal,max);	        
+	        Label max = new Label("Maximum");
+	        // labels look modern like the picture
+	        String labelStyle = "-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-text-fill: #1C1C1C;";
+	        min.setStyle(labelStyle);
+	        bal.setStyle(labelStyle);
+	        max.setStyle(labelStyle);
+	        labels.add(min, 0, 0);
+	        labels.add(bal, 1, 0);
+	        labels.add(max, 2, 0);
 	        //the slider
 	        Slider slider = new Slider(0, 100, 50); // (min, max, start)
-	        slider.setShowTickMarks(true);// enable the marks
 	        slider.setMajorTickUnit(25); // divide slider by 25 => there 4 option point 0, 25, 50, 75, 100
 	        slider.setSnapToTicks(true);	// the slider jump to the closet tick...
 	        slider.setMinorTickCount(0);// make the jump work better.
-	        slider.setMaxWidth(440); // slider length
+	        slider.setMaxWidth(400);// slider length
 	        /*
 	         * SliderColorLinerTrack(slider);
 	         * move to before primaryStage.show() because the internal parts of the slider

@@ -16,29 +16,32 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
 }
 
+/* effect when mouse pointting to a button */
 .modern-button:hover {
     -fx-background-color: #FAFFFF;
     -fx-translate-y: -3; /* Slight lift effect */
 }
 
+/*slider + label bounding around*/
+/* The frosted-glass background box */
 .box {
-	    -fx-background-color: #BEDAE2
+    -fx-background-color: #B5C5D5; 
+    -fx-background-radius: 12;
 }
 
-/* Clean, modern track setup */
+/* The Track of slider line (Fixes the color leak) */
 .slider .track {
-	/* Shrinks the track: Top 0, Right 10, Bottom 0, Left 10 */
-	-fx-background-insets: 0 10 0 10;
-    -fx-pref-height: 6;          /* Make the line slightly thicker */
-    -fx-background-radius: 10;   /* Round the ends of the line */
-    /* DO NOT set -fx-background-color here, the Java listener handles it! */
+    -fx-pref-height: 6;
+    -fx-background-radius: 10;
+    -fx-background-insets: 0 12 0 12; /* Pulls ends inward so thumb hides them */
 }
 
-/* Your custom thumb */
+/* The Target Thumb of slider */
 .slider .thumb {
-    -fx-background-color: white, #0078D4; /* White border, Blue center */
-    -fx-background-insets: 0, 4;
-    -fx-background-radius: 60;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-background-color: #3B82F6, white, #EF4444; /* Blue, White, Red */
+    -fx-background-insets: 0, 4, 9;                /* The spacing for the rings */
+    -fx-background-radius: 50;                     /* Perfect circle */
+    -fx-pref-width: 24;
+    -fx-pref-height: 24;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
 }
-
