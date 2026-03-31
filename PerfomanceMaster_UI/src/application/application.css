@@ -25,7 +25,20 @@
 	    -fx-background-color: #BEDAE2
 }
 
+/* Clean, modern track setup */
+.slider .track {
+	/* Shrinks the track: Top 0, Right 10, Bottom 0, Left 10 */
+	-fx-background-insets: 0 10 0 10;
+    -fx-pref-height: 6;          /* Make the line slightly thicker */
+    -fx-background-radius: 10;   /* Round the ends of the line */
+    /* DO NOT set -fx-background-color here, the Java listener handles it! */
+}
+
+/* Your custom thumb */
 .slider .thumb {
-    -fx-background-color: #ff4d4d;
+    -fx-background-color: white, #0078D4; /* White border, Blue center */
+    -fx-background-insets: 0, 4;
+    -fx-background-radius: 60;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 

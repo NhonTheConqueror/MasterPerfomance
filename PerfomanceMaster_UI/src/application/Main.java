@@ -12,16 +12,40 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class Main extends Application{
 	
 	//use for set the primeryStage on screen's center properly
-	public void centerOnScreen(Stage stage) {
+	public void centerOnScreen(Stage stage) { // instance methods
 		Rectangle2D visualBound = Screen.getPrimary().getVisualBounds();
 		stage.setX((visualBound.getWidth() - stage.getWidth())/2);
 		stage.setY((visualBound.getHeight() - stage.getHeight())/2);
 	}
+	
+	//
+	private void ColorLinerTrack(Slider slider) {
+        //
+        StackPane trackPane = (StackPane) slider.lookup(".track");
+        // color (50% Blue, 50% Gray)
+        trackPane.setStyle("-fx-background-color: linear-gradient(to right, #0078D4 50%, #D3D3D3 50%);");
+        // add listener
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+                // Calculate percentage just in case you change the Max value later
+                double percentage = (new_val.doubleValue() / slider.getMax()) * 100;
+                
+                // Update the gradient dynamically
+                String style = String.format("-fx-background-color: linear-gradient(to right, #0078D4 %d%%, #D3D3D3 %d%%);", 
+                                             (int) percentage, (int) percentage);
+                trackPane.setStyle(style);
+            }
+        });	
+	}
+	
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -75,6 +99,11 @@ public class Main extends Application{
 	        slider.setSnapToTicks(true);	// the slider jump to the closet tick...
 	        slider.setMinorTickCount(0);// make the jump work better.
 	        slider.setMaxWidth(440); // slider length
+	        /*
+	         * SliderColorLinerTrack(slider);
+	         * move to before primaryStage.show() because the internal parts of the slider
+	         * (like the .track and the .thumb) do not exist yet
+	         */
 	        //add those to the boxs
 	        box.getChildren().addAll(labels, slider);
 	        //add the box to main layout
@@ -92,6 +121,7 @@ public class Main extends Application{
             //setup to primaryStage
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
+	        ColorLinerTrack(slider); //explained in slider
 	        /*
 	         * javafx default centerOnScreen is suck!
 	         * btw, this funct center the app at the screen when its first appear
@@ -101,6 +131,8 @@ public class Main extends Application{
 	    } 
 	    catch(Exception e) { e.printStackTrace(); } //error catching
 	}
+
+
 
 	//main
 	public static void main(String[] agrs) {
