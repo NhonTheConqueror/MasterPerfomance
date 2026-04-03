@@ -32,7 +32,7 @@ public class Main extends Application{
 	 * of course i stealth it from stackOverflow
 	 */
 	private void ColorLinerTrack(Slider slider) {
-        //
+        // hello
         StackPane trackPane = (StackPane) slider.lookup(".track");
         // color (50% Blue, 50% Gray)
         trackPane.setStyle("-fx-background-color: linear-gradient(to right, #0078D4 50%, #D3D3D3 50%);");
