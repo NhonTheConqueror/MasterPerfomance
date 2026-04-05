@@ -129,12 +129,8 @@ public class Main extends Application{
 	        //FINALIZE
 	        Scene scene = new Scene(mainLayout, 650, 650);
 	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-	        //make the app window cant be resize
-            primaryStage.setMinWidth(650);
-            primaryStage.setMaxWidth(650);
-            primaryStage.setMinHeight(650);
-            primaryStage.setMaxHeight(650);
-            //setup to primaryStage
+            primaryStage.setResizable(false);//make the app window cant be resize
+            primaryStage.setTitle("Performance Master");; //title name
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	        ColorLinerTrack(slider); //explained in slider
