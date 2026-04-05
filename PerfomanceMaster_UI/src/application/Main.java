@@ -8,13 +8,15 @@ import javafx.geometry.Insets;
 import javafx.stage.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.VBox; import javafx.scene.layout.HBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
@@ -59,6 +61,27 @@ public class Main extends Application{
 	        mainLayout.setPadding(new Insets(50)); // set a "foam" thick 50px all around in site mainlayouts
 
 
+	        
+	        //title bar
+	        HBox bar = new HBox();
+	        //title
+	        Label title = new Label("Performance Master");
+	        //minimize button
+	        Button minimizeButton = new Button();
+	        Image minimizeImg = new Image(getClass().getResourceAsStream("/img/close-window.jpg"));
+	        //minimizeButton.setGraphic(new ImageView(minimizeImg));
+	        //minimizeButton.
+	        //close button
+	        Button closeButton = new Button();
+	        //Image closeImg = new Image(getClass().getResourceAsStream("/img/close-window.jpg"));
+	        
+	        bar.getChildren().addAll(title, minimizeButton, closeButton);
+	        bar.getStyleClass().add("box");
+	        mainLayout.setTop(bar);
+	        mainLayout.setAlignment(bar, Pos.TOP_LEFT);
+	        
+	        
+	        
 	        //the pane which contain buttons, in center
 	        GridPane grid = new GridPane();
 	        grid.setAlignment(Pos.CENTER);
@@ -82,6 +105,7 @@ public class Main extends Application{
 	        grid.add(button4, 1, 1);//bot right
 	        //grid contain those buttons
 	        mainLayout.setCenter(grid);
+	     
 	        
 	        
 	        //the pane that contain slider
@@ -91,8 +115,8 @@ public class Main extends Application{
 	        box.setPadding(new Insets(10, 20, 10, 20));// distance between child and the box itself
 	        //the labels above the slider
 	        GridPane labels = new GridPane();
-	        labels.setMaxWidth(400); // MUST be identical to slider width
-
+	        labels.setMaxWidth(375); // MUST be identical to slider width	        
+	        
 	        ColumnConstraints col1 = new ColumnConstraints(); col1.setPercentWidth(33.3); col1.setHalignment(HPos.LEFT);
 	        ColumnConstraints col2 = new ColumnConstraints(); col2.setPercentWidth(33.3); col2.setHalignment(HPos.CENTER);
 	        ColumnConstraints col3 = new ColumnConstraints(); col3.setPercentWidth(33.3); col3.setHalignment(HPos.RIGHT);
@@ -109,28 +133,24 @@ public class Main extends Application{
 	        labels.add(min, 0, 0);
 	        labels.add(bal, 1, 0);
 	        labels.add(max, 2, 0);
+	        
 	        //the slider
 	        Slider slider = new Slider(0, 100, 50); // (min, max, start)
 	        slider.setMajorTickUnit(25); // divide slider by 25 => there 4 option point 0, 25, 50, 75, 100
 	        slider.setSnapToTicks(true);	// the slider jump to the closet tick...
 	        slider.setMinorTickCount(0);// make the jump work better.
 	        slider.setMaxWidth(400);// slider length
-	        /*
-	         * SliderColorLinerTrack(slider);
-	         * move to before primaryStage.show() because the internal parts of the slider
-	         * (like the .track and the .thumb) do not exist yet
-	         */
 	        //add those to the boxs
 	        box.getChildren().addAll(labels, slider);
 	        //add the box to main layout
 	        mainLayout.setBottom(box);
 	        
 
-	        //FINALIZE
+	        
 	        Scene scene = new Scene(mainLayout, 650, 650);
 	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(false);//make the app window cant be resize
-            primaryStage.setTitle("Performance Master");; //title name
+            primaryStage.initStyle(StageStyle.UNDECORATED); // Removes title bar to use my custom
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	        ColorLinerTrack(slider); //explained in slider

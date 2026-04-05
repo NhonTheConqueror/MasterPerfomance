@@ -2,6 +2,15 @@
     -fx-background-color: #f3f3f3; /* Light gray background */
 }
 
+/* style.css */
+.title-text {
+    -fx-font-family: "Orbitron", "Segoe UI Semibold"; /* Techy font */
+    -fx-font-size: 28px;
+    -fx-fill: linear-gradient(to bottom, #00f2fe 0%, #4facfe 100%); /* Neon Blue Gradient */
+    -fx-effect: dropshadow(three-pass-box, rgba(79, 172, 254, 0.8), 10, 0, 0, 0);
+    -fx-font-weight: bold;
+}
+
 .modern-button {
     -fx-background-color: white;
     -fx-background-radius: 20;
