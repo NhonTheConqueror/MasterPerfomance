@@ -57,38 +57,53 @@ public class Main extends Application{
 	public void start(Stage primaryStage) {
 	    try {
 	        //THE MAIN CONTAINER
-	        BorderPane mainLayout = new BorderPane();
-	        mainLayout.setPadding(new Insets(50)); // set a "foam" thick 50px all around in site mainlayouts
-
+	    	BorderPane root = new BorderPane();
+	        VBox mainLayout = new VBox(50);
+	        mainLayout.setAlignment(Pos.CENTER); 
+	        mainLayout.setPadding(new Insets(0,50,0,50)); // set a "foam" thick 50px all around in site mainlayouts
+	        mainLayout.getStyleClass().add("box2");
 
 	        
-	        //title bar
+	        //windows bar
 	        HBox bar = new HBox();
+	        bar.setPrefSize(650,30);
+	        bar.setAlignment(Pos.CENTER_LEFT);
 	        //title
 	        Label title = new Label("Performance Master");
+	        title.getStyleClass().add("window-title");
+	        //add a little left margin so the text isn't glued to the edge
+	        HBox.setMargin(title, new Insets(0, 0, 0, 10));
+	        
+	        //The Invisible Spacer
+	        javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
+	        // This line tells the spacer to push everything else apart
+	        javafx.scene.layout.HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
+	        
 	        //minimize button
-	        Button minimizeButton = new Button();
-	        Image minimizeImg = new Image(getClass().getResourceAsStream("/img/close-window.jpg"));
+	        Button minimizeButton = new Button("—");
+	        minimizeButton.setPrefSize(45, 30);
+	        minimizeButton.getStyleClass().add("window-btn");
+	        //Image minimizeImg = new Image(getClass().getResourceAsStream("/img/close-window.jpg"));
 	        //minimizeButton.setGraphic(new ImageView(minimizeImg));
-	        //minimizeButton.
+	        
 	        //close button
-	        Button closeButton = new Button();
+	        Button closeButton = new Button("X");
+	        closeButton.setPrefSize(45, 30);
+	        closeButton.getStyleClass().add("window-close-btn");
 	        //Image closeImg = new Image(getClass().getResourceAsStream("/img/close-window.jpg"));
+
+	        bar.getChildren().addAll(title,spacer, minimizeButton, closeButton);
 	        
-	        bar.getChildren().addAll(title, minimizeButton, closeButton);
-	        bar.getStyleClass().add("box");
-	        mainLayout.setTop(bar);
-	        mainLayout.setAlignment(bar, Pos.TOP_LEFT);
-	        
-	        
+	        //bar.getStyleClass().add("box");
+	        root.setTop(bar);
+
 	        
 	        //the pane which contain buttons, in center
 	        GridPane grid = new GridPane();
 	        grid.setAlignment(Pos.CENTER);
 	        grid.setHgap(30); //horizon gap between buttons
 	        grid.setVgap(30); //vertical gap between buttons
-	        //grid.setStyle("-fx-background-color: #C0C0C0;"); // for debugging
-	        //create buttons
+
 	        Button button1 = new Button("Disable\n Defender & Update");
 	        Button button2 = new Button("Performance's insight");
 	        Button button3 = new Button("Terminate\n background apps");
@@ -103,8 +118,7 @@ public class Main extends Application{
 	        grid.add(button2, 1, 0);//top right
 	        grid.add(button3, 0, 1);//bot left
 	        grid.add(button4, 1, 1);//bot right
-	        //grid contain those buttons
-	        mainLayout.setCenter(grid);
+
 	     
 	        
 	        
@@ -143,11 +157,12 @@ public class Main extends Application{
 	        //add those to the boxs
 	        box.getChildren().addAll(labels, slider);
 	        //add the box to main layout
-	        mainLayout.setBottom(box);
-	        
+	        mainLayout.getChildren().addAll(grid, box);
+	        root.setCenter(mainLayout);
 
 	        
-	        Scene scene = new Scene(mainLayout, 650, 650);
+	        
+	        Scene scene = new Scene(root, 650, 650);
 	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(false);//make the app window cant be resize
             primaryStage.initStyle(StageStyle.UNDECORATED); // Removes title bar to use my custom

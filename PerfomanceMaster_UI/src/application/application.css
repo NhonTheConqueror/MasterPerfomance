@@ -2,15 +2,21 @@
     -fx-background-color: #f3f3f3; /* Light gray background */
 }
 
-/* style.css */
-.title-text {
-    -fx-font-family: "Orbitron", "Segoe UI Semibold"; /* Techy font */
-    -fx-font-size: 28px;
-    -fx-fill: linear-gradient(to bottom, #00f2fe 0%, #4facfe 100%); /* Neon Blue Gradient */
-    -fx-effect: dropshadow(three-pass-box, rgba(79, 172, 254, 0.8), 10, 0, 0, 0);
-    -fx-font-weight: bold;
-}
 
+.window-title {
+    /* 1. Font Family: Use the modern Windows system font */
+    -fx-font-family: "Segoe UI Variable", "Segoe UI", Helvetica, Arial;
+    
+    /* 2. Size and Weight: Make it slightly larger and bold */
+    -fx-font-size: 15px;
+    -fx-font-weight: 800; /* or use 'bold' */
+    
+    /* 3. Color: Don't use pure black (#000000). Use a dark slate/gray for a softer, premium look */
+    -fx-text-fill: #2C3E50; 
+    
+    /* 4. Letter Spacing: A tiny bit of spacing makes uppercase/bold text easier to read */
+    -fx-letter-spacing: 0.5px; 
+}
 .modern-button {
     -fx-background-color: white;
     -fx-background-radius: 20;
@@ -31,11 +37,33 @@
     -fx-translate-y: -3; /* Slight lift effect */
 }
 
-/*slider + label bounding around*/
-/* The frosted-glass background box */
+/* Base style for both title bar buttons */
+.window-btn, .window-close-btn {
+    -fx-background-color: transparent; /* Makes them flat/invisible initially */
+    -fx-background-radius: 0;          /* Sharp corners like Windows 11 */
+    -fx-text-fill: #333333;
+    -fx-font-family: "Segoe UI", Helvetica, Arial;
+    -fx-font-size: 14px;
+}
+
+/* Hover effect for Minimize (Light Gray) */
+.window-btn:hover {
+    -fx-background-color: #E5E5E5;
+}
+
+/* Hover effect for Close (Windows Red) */
+.window-close-btn:hover {
+    -fx-background-color: #E81123;
+    -fx-text-fill: white; /* Text turns white so it's readable on red */
+}
+/*slider's */
 .box {
     -fx-background-color: #B5C5D5; 
     -fx-background-radius: 12;
+}
+
+.box2 {
+    -fx-background-color: #DFF5E3; 
 }
 
 /* The Track of slider line (Fixes the color leak) */
