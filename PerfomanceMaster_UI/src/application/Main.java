@@ -1,6 +1,7 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.HPos;
@@ -21,6 +22,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class Main extends Application{
+	
+	private double X_offSet = 0;
+	private double Y_offSet = 0;
 	
 	//use for set the primeryStage on screen's center properly
 	public void centerOnScreen(Stage stage) { // instance methods
@@ -56,12 +60,13 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 	    try {
+	    	
 	        //THE MAIN CONTAINER
-	    	BorderPane root = new BorderPane();
+	    		BorderPane root = new BorderPane();
 	        VBox mainLayout = new VBox(50);
 	        mainLayout.setAlignment(Pos.CENTER); 
-	        mainLayout.setPadding(new Insets(0,50,0,50)); // set a "foam" thick 50px all around in site mainlayouts
-	        mainLayout.getStyleClass().add("box2");
+	        mainLayout.setPadding(new Insets(20, 50, 50, 50)); // set a "foam" thick **dpx all around in site mainlayouts
+	        //mainLayout.getStyleClass().add("box2");
 
 	        
 	        //windows bar
@@ -83,26 +88,29 @@ public class Main extends Application{
 	        Button minimizeButton = new Button("—");
 	        minimizeButton.setPrefSize(45, 30);
 	        minimizeButton.getStyleClass().add("window-btn");
-	        //Image minimizeImg = new Image(getClass().getResourceAsStream("/img/close-window.jpg"));
-	        //minimizeButton.setGraphic(new ImageView(minimizeImg));
+	        minimizeButton.setOnKeyPressed(null);
+	        minimizeButton.setOnAction(event -> {
+	        		Platform.exit();
+	        });
 	        
 	        //close button
 	        Button closeButton = new Button("X");
 	        closeButton.setPrefSize(45, 30);
 	        closeButton.getStyleClass().add("window-close-btn");
-	        //Image closeImg = new Image(getClass().getResourceAsStream("/img/close-window.jpg"));
+	        closeButton.setOnAction(event -> {
+	        		System.exit(0);
+	        });
 
 	        bar.getChildren().addAll(title,spacer, minimizeButton, closeButton);
-	        
 	        //bar.getStyleClass().add("box");
 	        root.setTop(bar);
-
+	        
 	        
 	        //the pane which contain buttons, in center
-	        GridPane grid = new GridPane();
-	        grid.setAlignment(Pos.CENTER);
-	        grid.setHgap(30); //horizon gap between buttons
-	        grid.setVgap(30); //vertical gap between buttons
+	        GridPane ButtonGrid = new GridPane();
+	        ButtonGrid.setAlignment(Pos.CENTER);
+	        ButtonGrid.setHgap(30); //horizon gap between buttons
+	        ButtonGrid.setVgap(30); //vertical gap between buttons
 
 	        Button button1 = new Button("Disable\n Defender & Update");
 	        Button button2 = new Button("Performance's insight");
@@ -114,26 +122,26 @@ public class Main extends Application{
 	        button3.getStyleClass().add("modern-button");
 	        button4.getStyleClass().add("modern-button");
 	        // add buttons to grid, also position
-	        grid.add(button1, 0, 0);//top left
-	        grid.add(button2, 1, 0);//top right
-	        grid.add(button3, 0, 1);//bot left
-	        grid.add(button4, 1, 1);//bot right
+	        ButtonGrid.add(button1, 0, 0);//top left
+	        ButtonGrid.add(button2, 1, 0);//top right
+	        ButtonGrid.add(button3, 0, 1);//bot left
+	        ButtonGrid.add(button4, 1, 1);//bot right
 
 	     
 	        
 	        
 	        //the pane that contain slider
-	        VBox box = new VBox(12);// 12 is height distance between child themself
-	        box.setAlignment(Pos.CENTER);
-	        box.getStyleClass().add("box");
-	        box.setPadding(new Insets(10, 20, 10, 20));// distance between child and the box itself
+	        VBox Sliderbox = new VBox(12);// 12 is height distance between child themself
+	        Sliderbox.setAlignment(Pos.CENTER);
+	        Sliderbox.getStyleClass().add("box");
+	        Sliderbox.setPadding(new Insets(10, 20, 10, 25));// distance between child and the box itself
 	        //the labels above the slider
 	        GridPane labels = new GridPane();
-	        labels.setMaxWidth(375); // MUST be identical to slider width	        
+	        labels.setMaxWidth(505); // MUST be identical to slider width	        
 	        
-	        ColumnConstraints col1 = new ColumnConstraints(); col1.setPercentWidth(33.3); col1.setHalignment(HPos.LEFT);
-	        ColumnConstraints col2 = new ColumnConstraints(); col2.setPercentWidth(33.3); col2.setHalignment(HPos.CENTER);
-	        ColumnConstraints col3 = new ColumnConstraints(); col3.setPercentWidth(33.3); col3.setHalignment(HPos.RIGHT);
+	        ColumnConstraints col1 = new ColumnConstraints(); col1.setPercentWidth(100/3); col1.setHalignment(HPos.LEFT);
+	        ColumnConstraints col2 = new ColumnConstraints(); col2.setPercentWidth(100/3); col2.setHalignment(HPos.CENTER);
+	        ColumnConstraints col3 = new ColumnConstraints(); col3.setPercentWidth(100/3); col3.setHalignment(HPos.RIGHT);
 	        labels.getColumnConstraints().addAll(col1, col2, col3);
 
 	        Label min = new Label("Minimum");
@@ -153,19 +161,25 @@ public class Main extends Application{
 	        slider.setMajorTickUnit(25); // divide slider by 25 => there 4 option point 0, 25, 50, 75, 100
 	        slider.setSnapToTicks(true);	// the slider jump to the closet tick...
 	        slider.setMinorTickCount(0);// make the jump work better.
-	        slider.setMaxWidth(400);// slider length
+	        slider.setMinWidth(505);// slider length
 	        //add those to the boxs
-	        box.getChildren().addAll(labels, slider);
+	        Sliderbox.getChildren().addAll(labels, slider);
 	        //add the box to main layout
-	        mainLayout.getChildren().addAll(grid, box);
+	        mainLayout.getChildren().addAll(ButtonGrid, Sliderbox);
 	        root.setCenter(mainLayout);
 
 	        
 	        
-	        Scene scene = new Scene(root, 650, 650);
+	        primaryStage.initStyle(StageStyle.TRANSPARENT);
+	        Scene scene = new Scene(root, 650, 630);
+	        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+
+	        // Just add the class, don't use setStyle!
+	        root.getStyleClass().add("glass-pane");
+	        
 	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(false);//make the app window cant be resize
-            primaryStage.initStyle(StageStyle.UNDECORATED); // Removes title bar to use my custom
+            //primaryStage.initStyle(StageStyle.UNDECORATED); // Removes title bar to use my custom
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	        ColorLinerTrack(slider); //explained in slider
@@ -174,6 +188,16 @@ public class Main extends Application{
 	         * btw, this funct center the app at the screen when its first appear
 	         */
 	        centerOnScreen(primaryStage);
+	        
+	        //draggable window
+	        root.setOnMousePressed(event -> {
+	        		X_offSet = event.getSceneX();
+	        		Y_offSet = event.getSceneY();
+	        });
+	        root.setOnMouseDragged(event -> {
+	        		primaryStage.setX(event.getScreenX() - X_offSet);
+	        		primaryStage.setY(event.getScreenY() - Y_offSet);
+	        });
 	        
 	    } 
 	    catch(Exception e) { e.printStackTrace(); } //error catching

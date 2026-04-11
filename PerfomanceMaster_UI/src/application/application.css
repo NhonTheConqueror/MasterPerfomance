@@ -1,6 +1,4 @@
-.root {
-    -fx-background-color: #f3f3f3; /* Light gray background */
-}
+	
 
 
 .window-title {
@@ -40,7 +38,7 @@
 /* Base style for both title bar buttons */
 .window-btn, .window-close-btn {
     -fx-background-color: transparent; /* Makes them flat/invisible initially */
-    -fx-background-radius: 0;          /* Sharp corners like Windows 11 */
+    -fx-background-radius: 20;          /* Sharp corners like Windows 11 */
     -fx-text-fill: #333333;
     -fx-font-family: "Segoe UI", Helvetica, Arial;
     -fx-font-size: 14px;
@@ -81,4 +79,11 @@
     -fx-pref-width: 24;
     -fx-pref-height: 24;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+.glass-pane {
+    -fx-background-color: rgba(240, 255, 255, 0.9); /* 0.4 is 40% frosted glass */
+    -fx-background-radius: 20;
+    -fx-border-color: rgba(255, 255, 255, 0.6);
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 10);
 }
