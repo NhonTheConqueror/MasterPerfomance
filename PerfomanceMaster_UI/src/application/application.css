@@ -14,6 +14,7 @@
     -fx-border-color: rgba(0, 255, 255, 0.5); /* Brighter edge */
     -fx-border-radius: 15;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 255, 255, 0.4), 40, 0, 0, 0); /* Wider, brighter cyan glow */
+	
 }
 
 /* Cyberpunk Buttons */
@@ -64,11 +65,13 @@
 .window-btn:hover {
     -fx-background-color: rgba(0, 255, 255, 0.2);
     -fx-text-fill: #00FFFF;
+	-fx-cursor: hand;
 }
 
 .window-close-btn:hover {
     -fx-background-color: #FF007F; /* Neon Pink Close */
     -fx-text-fill: white; 
+	-fx-cursor: hand;
 }
 
 /* Slider Container */
@@ -84,6 +87,7 @@
     -fx-pref-height: 6;
     -fx-background-radius: 10;
     -fx-background-insets: 0 12 0 12; 
+	-fx-cursor: hand;
 }
 
 /* Cyberpunk Slider Thumb */
@@ -94,4 +98,5 @@
     -fx-pref-width: 22;
     -fx-pref-height: 22;
     -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 127, 0.6), 10, 0, 0, 0); /* Pink glow */
+	-fx-cursor: hand;
 }

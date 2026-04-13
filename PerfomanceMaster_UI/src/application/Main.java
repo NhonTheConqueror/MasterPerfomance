@@ -55,6 +55,38 @@ public class Main extends Application{
             }
         } );	
 	}
+	
+	private void powerChanger(Slider slider) {
+		slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+		    // Only trigger when the slider stops moving to exactly 0, 1, 2, or 3
+		    if (newValue.intValue() != oldValue.intValue()) {
+		        int powerLevel = newValue.intValue();
+		        
+		        switch (powerLevel) {
+		            case 0:
+		                System.out.println("Mode: Best Power Save");
+		                // TODO: Execute Power Saver command
+		                break;
+		            case 25:
+		                System.out.println("Mode: Better Power Save");
+		                // TODO: Execute Balanced command
+		                break;
+		            case 50:
+		                System.out.println("Mode: Balanced power");
+		                // TODO: Execute High Performance command
+		                break;
+		            case 75:
+		                System.out.println("Mode: Better Performance");
+		                // TODO: Execute Ultimate Performance command
+		                break;
+		            case 100:
+		            		System.out.println("Mode: Ultimate Performance");
+		            		break;
+		        }
+		    }
+		});
+	}
+	
 	//to create icon in 4 main button (^_~)
 	private ImageView createIcon(String str) {
 		try {
@@ -116,7 +148,7 @@ public class Main extends Application{
 	        //bar.getStyleClass().add("box");
 	        root.setTop(bar);
 	        
-	        
+	       
 	        //the pane which contain buttons, in center
 	        GridPane ButtonGrid = new GridPane();
 	        ButtonGrid.setAlignment(Pos.CENTER);
@@ -170,6 +202,7 @@ public class Main extends Application{
 	        slider.setMajorTickUnit(25); // divide slider by 25 => there 4 option point 0, 25, 50, 75, 100
 	        slider.setSnapToTicks(true);	// the slider jump to the closet tick...
 	        slider.setMinorTickCount(0);// make the jump work better.
+	        
 	        slider.setMinWidth(505);// slider length
 	        //add those to the boxs
 	        Sliderbox.getChildren().addAll(labels, slider);
@@ -182,6 +215,12 @@ public class Main extends Application{
 	        primaryStage.initStyle(StageStyle.TRANSPARENT); //set stage to transparent, this make the default title bar disappear
 	        Scene scene = new Scene(root, 650, 630);
 	        scene.setFill(javafx.scene.paint.Color.TRANSPARENT); //set scene too transparent
+	        
+	        // --- THE FIX: CLIP THE CORNERS OFF THE APP ---
+	        javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle(650, 630); // Must match your Scene size!
+	        clip.setArcWidth(30);  // The curve width (double your CSS radius)
+	        clip.setArcHeight(30); // The curve height
+	        root.setClip(clip);
 
 	        root.getStyleClass().add("glass-pane");
 	        
@@ -193,6 +232,7 @@ public class Main extends Application{
 	        primaryStage.show();
 	        
 	        ColorLinerTrack(slider); //a red line track in slider
+	        powerChanger(slider);
 
 	        centerOnScreen(primaryStage); //funct center the app at the screen when its first appear
 	        
