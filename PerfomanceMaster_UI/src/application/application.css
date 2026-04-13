@@ -1,89 +1,97 @@
-	
-
-
+/* Window Title */
 .window-title {
-    /* 1. Font Family: Use the modern Windows system font */
     -fx-font-family: "Segoe UI Variable", "Segoe UI", Helvetica, Arial;
-    
-    /* 2. Size and Weight: Make it slightly larger and bold */
-    -fx-font-size: 15px;
-    -fx-font-weight: 800; /* or use 'bold' */
-    
-    /* 3. Color: Don't use pure black (#000000). Use a dark slate/gray for a softer, premium look */
-    -fx-text-fill: #2C3E50; 
-    
-    /* 4. Letter Spacing: A tiny bit of spacing makes uppercase/bold text easier to read */
-    -fx-letter-spacing: 0.5px; 
+    -fx-font-size: 16px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #FF007F; /* Neon Pink */
+    -fx-letter-spacing: 1.5px; 
 }
+
+/* Cyberpunk Glass Background */
+.glass-pane {
+    -fx-background-color: rgba(35, 35, 50, 0.85); /* Shifted from black to a lighter navy-gray */
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(0, 255, 255, 0.5); /* Brighter edge */
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 255, 255, 0.4), 40, 0, 0, 0); /* Wider, brighter cyan glow */
+}
+
+/* Cyberpunk Buttons */
 .modern-button {
-    -fx-background-color: white;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
+    -fx-background-color: rgba(60, 60, 80, 0.7); /* Much lighter panel color */
+    -fx-border-color: rgba(0, 255, 255, 0.6); /* Stronger border line */
+    -fx-border-width: 2;
+    -fx-background-radius: 8; 
+    -fx-border-radius: 8;
     -fx-min-width: 250;
     -fx-min-height: 180;
     -fx-font-size: 16px;
     -fx-font-family: "Segoe UI", Helvetica, Arial;
+    -fx-font-weight: bold;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
-    /* Soft Shadow */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-text-fill: #E0FFFF; /* A lighter, whiter Cyan for easier reading */
+	/* MODERN ICON ADDITIONS: */
+	    /* ESSENTIAL: Tell JavaFX to display the icon ABOVE the text */
+	-fx-content-display: TOP; 
+	    
+	    /* Control the space (gap) between the icon and the text */
+	-fx-graphic-text-gap: 15px; 
+	    
+	    /* Add padding to the whole button for a cleaner, fluent look */
+	-fx-padding: 20px;
 }
 
-/* effect when mouse pointting to a button */
+/* Glowing Hover Effect */
 .modern-button:hover {
-    -fx-background-color: #FAFFFF;
-    -fx-translate-y: -3; /* Slight lift effect */
+    -fx-background-color: rgba(0, 255, 255, 0.1);
+    -fx-border-color: #00FFFF; /* Bright Cyan */
+    -fx-text-fill: #FFFFFF;
+    -fx-translate-y: -3; 
+    -fx-cursor: hand; 
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 255, 255, 0.5), 20, 0, 0, 0);
 }
 
-/* Base style for both title bar buttons */
+/* Title Bar Buttons */
 .window-btn, .window-close-btn {
-    -fx-background-color: transparent; /* Makes them flat/invisible initially */
-    -fx-background-radius: 20;          /* Sharp corners like Windows 11 */
-    -fx-text-fill: #333333;
+    -fx-background-color: transparent; 
+    -fx-background-radius: 8;          
+    -fx-text-fill: #FFFFFF;
     -fx-font-family: "Segoe UI", Helvetica, Arial;
     -fx-font-size: 14px;
 }
 
-/* Hover effect for Minimize (Light Gray) */
 .window-btn:hover {
-    -fx-background-color: #E5E5E5;
+    -fx-background-color: rgba(0, 255, 255, 0.2);
+    -fx-text-fill: #00FFFF;
 }
 
-/* Hover effect for Close (Windows Red) */
 .window-close-btn:hover {
-    -fx-background-color: #E81123;
-    -fx-text-fill: white; /* Text turns white so it's readable on red */
+    -fx-background-color: #FF007F; /* Neon Pink Close */
+    -fx-text-fill: white; 
 }
-/*slider's */
+
+/* Slider Container */
 .box {
-    -fx-background-color: #B5C5D5; 
-    -fx-background-radius: 12;
+    -fx-background-color: rgba(60, 60, 80, 0.7); /* Matches the new button background */
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(255, 0, 127, 0.7); /* Stronger pink accent */
+    -fx-border-radius: 8;
 }
 
-.box2 {
-    -fx-background-color: #DFF5E3; 
-}
-
-/* The Track of slider line (Fixes the color leak) */
+/* Slider Track */
 .slider .track {
     -fx-pref-height: 6;
     -fx-background-radius: 10;
-    -fx-background-insets: 0 12 0 12; /* Pulls ends inward so thumb hides them */
+    -fx-background-insets: 0 12 0 12; 
 }
 
-/* The Target Thumb of slider */
+/* Cyberpunk Slider Thumb */
 .slider .thumb {
-    -fx-background-color: #3B82F6, white, #EF4444; /* Blue, White, Red */
-    -fx-background-insets: 0, 4, 9;                /* The spacing for the rings */
-    -fx-background-radius: 50;                     /* Perfect circle */
-    -fx-pref-width: 24;
-    -fx-pref-height: 24;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
-}
-.glass-pane {
-    -fx-background-color: rgba(240, 255, 255, 0.9); /* 0.4 is 40% frosted glass */
-    -fx-background-radius: 20;
-    -fx-border-color: rgba(255, 255, 255, 0.6);
-    -fx-border-radius: 20;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 10);
+    -fx-background-color: #00FFFF, #1A1A24, #FF007F; /* Cyan border, dark inner, Pink core */
+    -fx-background-insets: 0, 2, 7;                
+    -fx-background-radius: 50;                     
+    -fx-pref-width: 22;
+    -fx-pref-height: 22;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 127, 0.6), 10, 0, 0, 0); /* Pink glow */
 }

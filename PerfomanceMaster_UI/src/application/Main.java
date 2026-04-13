@@ -34,7 +34,7 @@ public class Main extends Application{
 	}
 	
 	/*
-	 * the line color behind slider button
+	 * the line color track behind slider button
 	 * of course i stealth it from stackOverflow
 	 */
 	private void ColorLinerTrack(Slider slider) {
@@ -55,7 +55,21 @@ public class Main extends Application{
             }
         } );	
 	}
-	
+	//to create icon in 4 main button (^_~)
+	private ImageView createIcon(String str) {
+		try {
+			Image img = new Image(getClass().getResourceAsStream(str));
+			ImageView res = new ImageView(img);
+			// standard icon size
+			res.setFitHeight(60); 
+		    res.setFitWidth(60);
+		    return res;
+		}
+		catch(NullPointerException e) {
+			System.err.println("Could not find icon resources. Please check your file paths!");
+			return null;
+		}
+	}
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -73,7 +87,6 @@ public class Main extends Application{
 	        HBox bar = new HBox();
 	        bar.setPrefSize(650,30);
 	        bar.setAlignment(Pos.CENTER_LEFT);
-	        //title
 	        Label title = new Label("Performance Master");
 	        title.getStyleClass().add("window-title");
 	        //add a little left margin so the text isn't glued to the edge
@@ -92,7 +105,6 @@ public class Main extends Application{
 	        minimizeButton.setOnAction(event -> {
 	        		Platform.exit();
 	        });
-	        
 	        //close button
 	        Button closeButton = new Button("X");
 	        closeButton.setPrefSize(45, 30);
@@ -100,7 +112,6 @@ public class Main extends Application{
 	        closeButton.setOnAction(event -> {
 	        		System.exit(0);
 	        });
-
 	        bar.getChildren().addAll(title,spacer, minimizeButton, closeButton);
 	        //bar.getStyleClass().add("box");
 	        root.setTop(bar);
@@ -111,16 +122,15 @@ public class Main extends Application{
 	        ButtonGrid.setAlignment(Pos.CENTER);
 	        ButtonGrid.setHgap(30); //horizon gap between buttons
 	        ButtonGrid.setVgap(30); //vertical gap between buttons
-
-	        Button button1 = new Button("Disable\n Defender & Update");
+	        Button button1 = new Button("Defender & Update");
 	        Button button2 = new Button("Performance's insight");
 	        Button button3 = new Button("Terminate\n background apps");
 	        Button button4 = new Button("Clean Ram & Storage");
-	        // add a CSS class to all buttons for styling
-	        button1.getStyleClass().add("modern-button");
-	        button2.getStyleClass().add("modern-button");
-	        button3.getStyleClass().add("modern-button");
-	        button4.getStyleClass().add("modern-button");
+	        // add a CSS class and icon to all buttons for styling
+	        button1.getStyleClass().add("modern-button"); button1.setGraphic(createIcon("/img/icon/shield.png"));
+	        button2.getStyleClass().add("modern-button"); button2.setGraphic(createIcon("/img/icon/chart.png"));
+	        button3.getStyleClass().add("modern-button"); button3.setGraphic(createIcon("/img/icon/app.png"));
+	        button4.getStyleClass().add("modern-button"); button4.setGraphic(createIcon("/img/icon/storage.png"));
 	        // add buttons to grid, also position
 	        ButtonGrid.add(button1, 0, 0);//top left
 	        ButtonGrid.add(button2, 1, 0);//top right
@@ -137,8 +147,7 @@ public class Main extends Application{
 	        Sliderbox.setPadding(new Insets(10, 20, 10, 25));// distance between child and the box itself
 	        //the labels above the slider
 	        GridPane labels = new GridPane();
-	        labels.setMaxWidth(505); // MUST be identical to slider width	        
-	        
+	        labels.setMaxWidth(505); 
 	        ColumnConstraints col1 = new ColumnConstraints(); col1.setPercentWidth(100/3); col1.setHalignment(HPos.LEFT);
 	        ColumnConstraints col2 = new ColumnConstraints(); col2.setPercentWidth(100/3); col2.setHalignment(HPos.CENTER);
 	        ColumnConstraints col3 = new ColumnConstraints(); col3.setPercentWidth(100/3); col3.setHalignment(HPos.RIGHT);
@@ -147,8 +156,8 @@ public class Main extends Application{
 	        Label min = new Label("Minimum");
 	        Label bal = new Label("Balanced");       
 	        Label max = new Label("Maximum");
-	        // labels look modern like the picture
-	        String labelStyle = "-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-text-fill: #1C1C1C;";
+	        // labels look modern like
+	        String labelStyle = "-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-text-fill: #FFFFFF;";
 	        min.setStyle(labelStyle);
 	        bal.setStyle(labelStyle);
 	        max.setStyle(labelStyle);
@@ -169,27 +178,25 @@ public class Main extends Application{
 	        root.setCenter(mainLayout);
 
 	        
-	        
-	        primaryStage.initStyle(StageStyle.TRANSPARENT);
-	        Scene scene = new Scene(root, 650, 630);
-	        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
 
-	        // Just add the class, don't use setStyle!
+	        primaryStage.initStyle(StageStyle.TRANSPARENT); //set stage to transparent, this make the default title bar disappear
+	        Scene scene = new Scene(root, 650, 630);
+	        scene.setFill(javafx.scene.paint.Color.TRANSPARENT); //set scene too transparent
+
 	        root.getStyleClass().add("glass-pane");
 	        
 	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	        
             primaryStage.setResizable(false);//make the app window cant be resize
-            //primaryStage.initStyle(StageStyle.UNDECORATED); // Removes title bar to use my custom
+            
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
-	        ColorLinerTrack(slider); //explained in slider
-	        /*
-	         * javafx default centerOnScreen is suck!
-	         * btw, this funct center the app at the screen when its first appear
-	         */
-	        centerOnScreen(primaryStage);
 	        
-	        //draggable window
+	        ColorLinerTrack(slider); //a red line track in slider
+
+	        centerOnScreen(primaryStage); //funct center the app at the screen when its first appear
+	        
+	        ///draggable window
 	        root.setOnMousePressed(event -> {
 	        		X_offSet = event.getSceneX();
 	        		Y_offSet = event.getSceneY();
@@ -198,6 +205,7 @@ public class Main extends Application{
 	        		primaryStage.setX(event.getScreenX() - X_offSet);
 	        		primaryStage.setY(event.getScreenY() - Y_offSet);
 	        });
+	        ///
 	        
 	    } 
 	    catch(Exception e) { e.printStackTrace(); } //error catching
