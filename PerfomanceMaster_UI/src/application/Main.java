@@ -27,7 +27,7 @@ public class Main extends Application{
 	private double Y_offSet = 0;
 	
 	//use for set the primeryStage on screen's center properly
-	public void centerOnScreen(Stage stage) { // instance methods
+	private void centerOnScreen(Stage stage) { // instance methods
 		Rectangle2D visualBound = Screen.getPrimary().getVisualBounds();
 		stage.setX((visualBound.getWidth() - stage.getWidth())/2);
 		stage.setY((visualBound.getHeight() - stage.getHeight())/2);
@@ -58,39 +58,50 @@ public class Main extends Application{
 	
 	private void powerChanger(Slider slider) {
 		slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-		    // Only trigger when the slider stops moving to exactly 0, 1, 2, or 3
 		    if (newValue.intValue() != oldValue.intValue()) {
 		        int powerLevel = newValue.intValue();
+		        Window mainWindow = slider.getScene().getWindow();
 		        
-		        switch (powerLevel) {
-		            case 0:
-		                System.out.println("Mode: Best Power Save");
-		                // TODO: Execute Power Saver command
-		                break;
-		            case 25:
-		                System.out.println("Mode: Better Power Save");
-		                // TODO: Execute Balanced command
-		                break;
-		            case 50:
-		                System.out.println("Mode: Balanced power");
-		                // TODO: Execute High Performance command
-		                break;
-		            case 75:
-		                System.out.println("Mode: Better Performance");
-		                // TODO: Execute Ultimate Performance command
-		                break;
-		            case 100:
-		            		System.out.println("Mode: Ultimate Performance");
-		            		break;
+		        try {
+		            switch (powerLevel) {
+		                case 0:
+		                    System.out.println("Mode: Best Power Save");
+		                    new ProcessBuilder("cmd.exe", "/c", "powercfg /setactive 0dd03085-e014-45b4-b14f-081255cb403f").start();
+		                    showNotification("Switched to Best Power Save Mode!", mainWindow);
+		                    break;
+		                case 25:
+		                    System.out.println("Mode: Better Power Save");
+		                    new ProcessBuilder("cmd.exe", "/c", "powercfg /setactive 2db8eae1-011a-4381-aea1-899214d8eb7f").start();
+		                    showNotification("Switched to Better Power Save Mode!", mainWindow);
+		                    break;
+		                case 50:
+		                    System.out.println("Mode: Balanced power");
+		                    new ProcessBuilder("cmd.exe", "/c", "powercfg /setactive 381b4222-f694-41f0-9685-ff5bb260df2e").start();
+		                    showNotification("Switched to Balanced Mode!", mainWindow);
+		                    break;
+		                case 75:
+		                    System.out.println("Mode: Better Performance");
+		                    new ProcessBuilder("cmd.exe", "/c", "powercfg /setactive 11265530-a488-4d16-8d27-54b5f1550805").start();
+		                    showNotification("Switched to Better Performance Mode!", mainWindow);
+		                    break;
+		                case 100:
+		                    System.out.println("Mode: Ultimate Performance");
+		                    new ProcessBuilder("cmd.exe", "/c", "powercfg /setactive a3936425-09c9-4d7b-b1fe-c46a6a65bdc7").start();
+		                    //  need fix
+		                    showNotification("Switched to Best Performance Mode!", mainWindow);
+		                    break;
+		            }
+		        } catch (Exception e) {
+		            e.printStackTrace();
 		        }
 		    }
 		});
 	}
 	
 	//to create icon in 4 main button (^_~)
-	private ImageView createIcon(String str) {
+	private ImageView createIcon(String src) {
 		try {
-			Image img = new Image(getClass().getResourceAsStream(str));
+			Image img = new Image(getClass().getResourceAsStream(src));
 			ImageView res = new ImageView(img);
 			// standard icon size
 			res.setFitHeight(60); 
@@ -101,6 +112,16 @@ public class Main extends Application{
 			System.err.println("Could not find icon resources. Please check your file paths!");
 			return null;
 		}
+	}
+
+	private void showNotification(String message, Window owner) {
+		Label text = new Label(message);
+		text.setStyle("-fx-background-color: white; -fx-padding: 10px 20px; -fx-background-radius: 8;"
+				+ "-fx-font-family: 'Segoe UI'; -fx-font-weight: bold;");
+        text.setMinWidth(80); text.setMinHeight(50);
+        
+		Popup pop = new Popup(); pop.getContent().add(text);
+		pop.setAutoHide(true); pop.show(owner);		
 	}
 	
 	@Override
@@ -217,7 +238,7 @@ public class Main extends Application{
 	        scene.setFill(javafx.scene.paint.Color.TRANSPARENT); //set scene too transparent
 	        
 	        // --- THE FIX: CLIP THE CORNERS OFF THE APP ---
-	        javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle(650, 630); // Must match your Scene size!
+	        javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle(650, 630);
 	        clip.setArcWidth(30);  // The curve width (double your CSS radius)
 	        clip.setArcHeight(30); // The curve height
 	        root.setClip(clip);
